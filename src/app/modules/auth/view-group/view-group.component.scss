@@ -1,0 +1,59 @@
+:host {
+  flex: auto;
+  flex-wrap: wrap;
+}
+
+.container {
+  margin: 10px;
+  width: 100%;
+  max-width: 840px;
+  border-radius: 4px;
+}
+
+mat-toolbar {
+  width: 100%;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.content {
+  width: 100%;
+  padding: 25px 0px;
+}
+
+.section-title {
+  margin-top: 10px;
+  font-size: xx-large;
+  font-weight: lighter;
+}
+
+.section-body {
+  width: 100%;
+}
+
+.profile {
+  width: 140px;
+  max-width: 140px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.profile p {
+  max-width:140px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+mat-form-field {
+  width: 200px;
+}
+
+.image-preview {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background-image: url(/assets/img/profile/anonymous.png);
+  background-size: cover;
+}
+

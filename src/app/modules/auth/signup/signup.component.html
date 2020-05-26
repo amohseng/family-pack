@@ -1,0 +1,28 @@
+
+<section fxFlex fxLayoutAlign="center center">
+  <mat-card *ngIf="!isWaiting">
+    <mat-card-header>
+      <img class="avatar" mat-card-avatar>
+      <mat-card-title>Signup</mat-card-title>
+      <mat-card-subtitle>Family Pack</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="start start" #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <mat-form-field>
+          <input type="email" matInput placeholder="Your email" ngModel name="email" required email #emailInput="ngModel">
+          <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="!emailInput.hasError('required')">Enter a valid email</mat-error>
+        </mat-form-field>
+        <mat-form-field hintLabel="Should be at least 6 characters">
+          <input type="password" matInput placeholder="Your password" ngModel name="password" required minlength="6" #pwInput="ngModel">
+          <mat-hint align="end"> {{pwInput.value?.length}} / 6</mat-hint>
+          <mat-error>Has to be at least 6 characters</mat-error>
+        </mat-form-field>
+        <br>
+        <button fxFlexAlign="end" type="submit" mat-flat-button color="primary" [disabled]="!f.valid">Next</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-spinner *ngIf="isWaiting"></mat-spinner>
+</section>
+

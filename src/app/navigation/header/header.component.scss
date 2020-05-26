@@ -1,0 +1,30 @@
+a.logo {
+  text-decoration: none;
+  color: white;
+}
+
+a.logo:hover,a.logo:active {
+  color: white;
+}
+
+.logo-title {
+  font-size: 1.3rem;
+  font-weight: 300;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+.logo-icon {
+  vertical-align: middle;
+}
+
+.display-name {
+  font-weight: 300;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+.avatar {
+  vertical-align: middle;
+  background-image: url(/assets/img/profile/anonymous.png);
+  background-size: cover;
+}

@@ -1,0 +1,19 @@
+<section fxFlex fxLayoutAlign="center center">
+  <mat-card *ngIf="!isWaiting">
+    <mat-card-header>
+      <img  class="avatar" *ngIf="user" mat-card-avatar [src]="user.photoURL">
+      <mat-card-title>Email Verification</mat-card-title>
+      <mat-card-subtitle *ngIf="user">{{ user.email }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="center center">
+      <div>
+        Please check your email and follow the link to verify your email address.<br><br>
+        Already verified? <a (click)="logout()"  routerLink="/auth/login">Login!</a><br>
+        Not your email? <a (click)="logout()" routerLink="/auth/login">Another user!</a><br><br>
+        To resend the verification email press Resend.
+      </div>
+      <button fxFlexAlign="end" mat-flat-button color="primary" (click)="sendEmailVerification()">Resend</button>
+    </mat-card-content>
+  </mat-card>
+  <mat-spinner *ngIf="isWaiting"></mat-spinner>
+</section>

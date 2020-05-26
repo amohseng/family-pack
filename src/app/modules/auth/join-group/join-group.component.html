@@ -1,0 +1,40 @@
+<section *ngIf="!isWaiting" fxFlex  fxLayout="column" fxLayoutAlign="start center" class="container mat-elevation-z8">
+  <mat-toolbar>
+    <span fxFlex>Join Family Group</span>
+  </mat-toolbar>
+  <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="25px" class="content">
+    <div fxLayoutAlign="center center" class="section-title">
+      Join existing group
+    </div>
+    <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="10px" class="section-body">
+      <div *ngIf="groups.length === 0">
+        <span>Ask the group admin to send you an invitation</span>
+      </div>
+      <div fxLayoutAlign="center center" fxLayoutGap="10px" *ngFor="let group of groups">
+        <img mat-card-avatar [src]="group.admin.photoURL" [alt]="group.admin.displayName" class="avatar">
+        <span fxFlex>{{ group.name }}</span>
+        <button mat-icon-button color="primary" (click)="join(group.id)">
+          <mat-icon>check_circle_outline</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div fxLayoutAlign="center center" class="section-title">
+      Or create new one
+    </div>
+    <div fxLayout="row"  fxLayoutAlign="center center" class="section-body">
+      <mat-form-field>
+        <input type="text" matInput placeholder="Group name" ngModel name="name" required #nameInput="ngModel">
+        <mat-error>Name is required</mat-error>
+      </mat-form-field>
+      <button mat-icon-button color="primary" [disabled]="!nameInput.valid" (click)="createGroup(nameInput.value)">
+        <mat-icon>save</mat-icon>
+      </button>
+      <button mat-icon-button color="primary"  (click)="nameInput.reset()">
+        <mat-icon>redo</mat-icon>
+      </button>
+    </div>
+  </div>
+</section>
+<section *ngIf="isWaiting" fxFlex fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
+</section>

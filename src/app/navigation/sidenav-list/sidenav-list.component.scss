@@ -1,0 +1,16 @@
+.divider {
+  width: 90%;
+  margin: auto;
+}
+
+mat-nav-list {
+  max-width: 250px;
+}
+
+.display-name {
+  font-size: 1.3rem;
+  margin-left: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

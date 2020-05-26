@@ -1,0 +1,41 @@
+:host {
+  flex: auto;
+  flex-wrap: wrap;
+}
+
+.container {
+  margin: 10px;
+  width: 100%;
+  max-width: 840px;
+  border-radius: 4px;
+}
+
+mat-toolbar {
+  width: 100%;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.content {
+  width: 100%;
+  padding: 25px 0px;
+}
+
+.section-title {
+  margin-top: 10px;
+  font-size: xx-large;
+  font-weight: lighter;
+}
+
+.section-body {
+  width: 100%;
+}
+
+mat-form-field {
+  width: 200px;
+}
+
+.avatar {
+  background-image: url(/assets/img/profile/anonymous.png);
+  background-size: cover;
+}

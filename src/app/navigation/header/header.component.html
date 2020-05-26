@@ -1,0 +1,67 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()" fxHide.gt-sm>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <a class="logo" matRipple routerLink="/">
+    <mat-icon class="logo-icon" fxHide fxShow.gt-sm>favorite_border</mat-icon>
+    <span class="logo-title">FAMILY PACK</span>
+  </a>
+  <div fxFlex fxLayoutAlign="end" fxHide fxShow.gt-sm>
+    <div *ngIf="authenticated ">
+      <img class="avatar" *ngIf="user" mat-card-avatar [src]="user!.photoURL" [alt]="user!.displayName">
+      <span class="display-name" *ngIf="user">{{ user!.displayName }}</span>
+    </div>
+    <button *ngIf="authenticated" mat-icon-button [matMenuTriggerFor]="appsMenu">
+      <mat-icon>apps</mat-icon>
+    </button>
+    <mat-menu #appsMenu="matMenu">
+      <a *ngIf="authenticated" routerLink="/shopping/list" mat-menu-item>
+        <mat-icon color="primary">shopping_cart</mat-icon>
+        <span>Shopping List</span>
+      </a>
+      <a *ngIf="authenticated" routerLink="/shopping/items" mat-menu-item>
+        <mat-icon color="primary">list_alt</mat-icon>
+        <span>Shopping Items</span>
+      </a>
+      <a *ngIf="authenticated" routerLink="/shopping/history" mat-menu-item>
+        <mat-icon color="primary">history</mat-icon>
+        <span>Shopping History</span>
+      </a>
+    </mat-menu>
+    <button mat-icon-button [matMenuTriggerFor]="settingsMenu">
+      <mat-icon svgIcon="outline-settings"></mat-icon>
+    </button>
+    <mat-menu #settingsMenu="matMenu">
+
+      <a *ngIf="authenticated" routerLink="/auth/viewgroup" mat-menu-item>
+        <mat-icon color="primary">people</mat-icon>
+        <span>My Family</span>
+      </a>
+      <a *ngIf="authenticated" routerLink="/auth/updateprofile" mat-menu-item>
+        <mat-icon color="primary">person</mat-icon>
+        <span>My Profile</span>
+      </a>
+      <a *ngIf="authenticated" routerLink="/auth/changepassword" mat-menu-item>
+        <mat-icon color="primary">vpn_key</mat-icon>
+        <span>Change Password</span>
+      </a>
+      <a (click)="changeTheme()" style="cursor: pointer;" mat-menu-item>
+        <mat-icon color="primary">palette</mat-icon>
+        <span>Change Theme</span>
+      </a>
+      <a *ngIf="!authenticated" routerLink="/auth/signup" mat-menu-item>
+        <mat-icon color="primary">person_add</mat-icon>
+        <span>Signup</span>
+      </a>
+      <a *ngIf="!authenticated" routerLink="/auth/login" mat-menu-item>
+        <mat-icon color="primary">exit_to_app</mat-icon>
+        <span>Login</span>
+      </a>
+      <a *ngIf="authenticated" (click)="logout()" routerLink="/" mat-menu-item>
+        <mat-icon color="primary">eject</mat-icon>
+        <span>Logout</span>
+      </a>
+    </mat-menu>
+  </div>
+
+</mat-toolbar>

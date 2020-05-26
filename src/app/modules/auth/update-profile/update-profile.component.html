@@ -1,0 +1,34 @@
+<section fxFlex fxLayoutAlign="center center">
+  <mat-card *ngIf="!isWaiting">
+    <mat-card-header>
+      <img  class="avatar" *ngIf="user" mat-card-avatar [src]="user.photoURL">
+      <mat-card-title>Update Profile</mat-card-title>
+      <mat-card-subtitle ngClass.xs="subtitle" *ngIf="user">{{ user.email }}</mat-card-subtitle>
+    </mat-card-header>
+      <mat-card-content>
+        <form fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="start start" #f="ngForm" (ngSubmit)="updateProfile(f)">
+          <mat-form-field>
+            <input type="text" matInput placeholder="Your display name" [(ngModel)]="user.displayName" name="displayName" required #displayNameInput="ngModel">
+            <mat-error *ngIf="displayNameInput.hasError('required')">Display name is required</mat-error>
+          </mat-form-field>
+          <div fxLayout="column" fxFlexAlign="center" fxLayoutAlign="center center">
+            <img *ngIf="user && !isUploading" class="image-preview" [src]="user.photoURL" [alt]="user.displayName">
+            <div *ngIf="isUploading" fxLayout="column" fxLayoutAlign="center center" class="image-preview">
+              <div>Uploading...</div>
+              <ng-container *ngIf="(uploadPercent | async); let uploadPercent">
+                <div *ngIf="uploadPercent < 100  || isUploading">{{ uploadPercent | number : '1.0-0' }}%</div>
+              </ng-container>
+            </div>
+            <div>
+              <button mat-icon-button color="primary" type="button" [disabled]="isUploading" (click)="imagepicker.click()">
+                <mat-icon svgIcon="outline-camera_alt"></mat-icon>
+              </button>
+              <input hidden type="file" accept="image/*" capture="user" #imagepicker (change)="uploadFile($event)"/>
+            </div>
+          </div>
+          <button fxFlexAlign="end" type="submit" mat-flat-button color="primary" [disabled]="!f.valid || isUploading">Next</button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+    <mat-spinner *ngIf="isWaiting"></mat-spinner>
+  </section>
