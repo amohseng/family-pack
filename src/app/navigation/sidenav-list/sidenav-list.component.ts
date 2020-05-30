@@ -32,6 +32,7 @@ export class SidenavListComponent implements OnInit, OnDestroy {
     theme === 'app-light-theme' ? localStorage.setItem('theme', 'app-dark-theme') : localStorage.setItem('theme', 'app-light-theme');
     document.getElementsByTagName('html')[0].classList.remove(theme);
     document.getElementsByTagName('html')[0].classList.add(localStorage.getItem('theme'));
+    this.sidenav.toggle();
   }
 
   async logout() {

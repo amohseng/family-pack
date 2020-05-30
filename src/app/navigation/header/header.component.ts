@@ -16,9 +16,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   unsubscribe = new Subject<void>();
   authenticated = false;
   user: User;
+  toolbarColor;
   constructor(private snackBar: MatSnackBar, private authService: AuthService) { }
 
   ngOnInit(): void {
+    const theme = localStorage.getItem('theme');
     this.authService.authChange.pipe(takeUntil(this.unsubscribe)).subscribe(authenticated => {
       this.authenticated = authenticated;
     });

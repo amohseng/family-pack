@@ -12,19 +12,19 @@
       <span class="display-name" *ngIf="user">{{ user!.displayName }}</span>
     </div>
     <button *ngIf="authenticated" mat-icon-button [matMenuTriggerFor]="appsMenu">
-      <mat-icon>apps</mat-icon>
+      <mat-icon svgIcon="outline-shopping_cart"></mat-icon>
     </button>
     <mat-menu #appsMenu="matMenu">
       <a *ngIf="authenticated" routerLink="/shopping/list" mat-menu-item>
-        <mat-icon color="primary">shopping_cart</mat-icon>
+        <mat-icon>shopping_cart</mat-icon>
         <span>Shopping List</span>
       </a>
-      <a *ngIf="authenticated" routerLink="/shopping/items" mat-menu-item>
-        <mat-icon color="primary">list_alt</mat-icon>
-        <span>Shopping Items</span>
+      <a *ngIf="authenticated" routerLink="/shopping/template" mat-menu-item>
+        <mat-icon>list_alt</mat-icon>
+        <span>Shopping Template</span>
       </a>
       <a *ngIf="authenticated" routerLink="/shopping/history" mat-menu-item>
-        <mat-icon color="primary">history</mat-icon>
+        <mat-icon>history</mat-icon>
         <span>Shopping History</span>
       </a>
     </mat-menu>
@@ -34,31 +34,31 @@
     <mat-menu #settingsMenu="matMenu">
 
       <a *ngIf="authenticated" routerLink="/auth/viewgroup" mat-menu-item>
-        <mat-icon color="primary">people</mat-icon>
+        <mat-icon>people</mat-icon>
         <span>My Family</span>
       </a>
       <a *ngIf="authenticated" routerLink="/auth/updateprofile" mat-menu-item>
-        <mat-icon color="primary">person</mat-icon>
+        <mat-icon>person</mat-icon>
         <span>My Profile</span>
       </a>
       <a *ngIf="authenticated" routerLink="/auth/changepassword" mat-menu-item>
-        <mat-icon color="primary">vpn_key</mat-icon>
+        <mat-icon>vpn_key</mat-icon>
         <span>Change Password</span>
       </a>
       <a (click)="changeTheme()" style="cursor: pointer;" mat-menu-item>
-        <mat-icon color="primary">palette</mat-icon>
+        <mat-icon>palette</mat-icon>
         <span>Change Theme</span>
       </a>
       <a *ngIf="!authenticated" routerLink="/auth/signup" mat-menu-item>
-        <mat-icon color="primary">person_add</mat-icon>
+        <mat-icon>person_add</mat-icon>
         <span>Signup</span>
       </a>
       <a *ngIf="!authenticated" routerLink="/auth/login" mat-menu-item>
-        <mat-icon color="primary">exit_to_app</mat-icon>
+        <mat-icon>exit_to_app</mat-icon>
         <span>Login</span>
       </a>
       <a *ngIf="authenticated" (click)="logout()" routerLink="/" mat-menu-item>
-        <mat-icon color="primary">eject</mat-icon>
+        <mat-icon>eject</mat-icon>
         <span>Logout</span>
       </a>
     </mat-menu>

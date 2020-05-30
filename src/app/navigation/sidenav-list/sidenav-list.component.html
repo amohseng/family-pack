@@ -8,45 +8,45 @@
   </button>
   <h1 *ngIf="authenticated" mat-subheader>Shopping</h1>
   <a *ngIf="authenticated" mat-list-item routerLink="/shopping/list" (click)="sidenav.toggle()">
-    <mat-icon matListIcon color="primary">shopping_cart</mat-icon>
+    <mat-icon matListIcon>shopping_cart</mat-icon>
     <span>List</span>
   </a>
-  <a *ngIf="authenticated" mat-list-item routerLink="/shopping/items" (click)="sidenav.toggle()">
-    <mat-icon matListIcon color="primary">list_alt</mat-icon>
-    <span>Items</span>
+  <a *ngIf="authenticated" mat-list-item routerLink="/shopping/template" (click)="sidenav.toggle()">
+    <mat-icon matListIcon>list_alt</mat-icon>
+    <span>Template</span>
   </a>
   <a *ngIf="authenticated" mat-list-item routerLink="/shopping/history" (click)="sidenav.toggle()">
-    <mat-icon matListIcon color="primary">history</mat-icon>
+    <mat-icon matListIcon>history</mat-icon>
     <span>History</span>
   </a>
   <mat-divider ngClass="divider" *ngIf="authenticated"></mat-divider>
   <h1 *ngIf="authenticated" mat-subheader>Settings</h1>
   <a *ngIf="authenticated" mat-list-item routerLink="/auth/viewgroup" (click)="sidenav.toggle()">
-    <mat-icon matListIcon color="primary">people</mat-icon>
+    <mat-icon matListIcon>people</mat-icon>
     <span>My Family</span>
   </a>
   <a *ngIf="authenticated" mat-list-item routerLink="/auth/updateprofile" (click)="sidenav.toggle()">
-    <mat-icon matListIcon color="primary">person</mat-icon>
+    <mat-icon matListIcon>person</mat-icon>
     <span>My Profile</span>
   </a>
   <a *ngIf="authenticated" mat-list-item routerLink="/auth/changepassword" (click)="sidenav.toggle()">
-    <mat-icon matListIcon color="primary">vpn_key</mat-icon>
+    <mat-icon matListIcon>vpn_key</mat-icon>
     <span>Change Password</span>
   </a>
   <a mat-list-item style="cursor: pointer;" (click)="changeTheme()">
-    <mat-icon matListIcon color="primary">palette</mat-icon>
+    <mat-icon matListIcon>palette</mat-icon>
     <span>Change Theme</span>
   </a>
   <a *ngIf="authenticated" mat-list-item (click)="sidenav.toggle(); logout();">
-    <mat-icon matListIcon color="primary">eject</mat-icon>
+    <mat-icon matListIcon>eject</mat-icon>
     <span>Logout</span>
   </a>
   <a *ngIf="!authenticated" mat-list-item routerLink="/auth/signup" (click)="sidenav.toggle()">
-    <mat-icon matListIcon color="primary">person_add</mat-icon>
+    <mat-icon matListIcon>person_add</mat-icon>
     <span>Signup</span>
   </a>
   <a *ngIf="!authenticated" mat-list-item routerLink="/auth/login" (click)="sidenav.toggle()">
-    <mat-icon matListIcon color="primary">exit_to_app</mat-icon>
+    <mat-icon matListIcon>exit_to_app</mat-icon>
     <span>Login</span>
   </a>
 </mat-nav-list>

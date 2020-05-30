@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Group } from 'src/app/models/group.model';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { ShoppingService } from 'src/app/services/shopping.service';
 
 @Component({
   selector: 'app-join-group',
@@ -18,7 +19,8 @@ export class JoinGroupComponent implements OnInit, OnDestroy {
   isWaiting = false;
   user: User;
   groups: Group[] = [];
-  constructor(private router: Router, private snackBar: MatSnackBar, private authService: AuthService) { }
+  constructor(private router: Router, private snackBar: MatSnackBar,
+              private authService: AuthService, private shoppingService: ShoppingService) { }
 
   ngOnInit(): void {
     this.authService.userChange.pipe(takeUntil(this.unsubscribe)).subscribe(user => {
@@ -70,6 +72,7 @@ export class JoinGroupComponent implements OnInit, OnDestroy {
       const groupId = await this.authService.createGroup(group);
       this.user.groupId = groupId;
       await this.authService.updateUser(this.user);
+      await this.shoppingService.saveShoppingTemplate(this.shoppingService.initShoppingTemplate(groupId));
       this.router.navigate(['/auth/viewgroup']);
     } catch (error) {
       this.snackBar.open(error.message, 'Ok', {

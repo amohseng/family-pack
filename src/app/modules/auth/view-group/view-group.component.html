@@ -1,13 +1,13 @@
 <section *ngIf="!isWaiting" fxFlex  fxLayout="column" fxLayoutAlign="start center" class="container mat-elevation-z8">
   <mat-toolbar>
     <span *ngIf="group" fxFlex>{{ group!.name }}</span>
-    <button mat-icon-button (click)="editMode = true">
-      <mat-icon>edit</mat-icon>
+    <button mat-icon-button color="primary" (click)="editMode = true">
+      <mat-icon svgIcon="outline-edit">edit</mat-icon>
     </button>
-    <button mat-icon-button (click)="inviteMode = true">
+    <button mat-icon-button color="primary" (click)="inviteMode = true">
       <mat-icon>person_add</mat-icon>
     </button>
-    <button mat-icon-button (click)="leaveGroup()" [disabled]="isAdmin">
+    <button mat-icon-button color="primary" (click)="leaveGroup()" [disabled]="isAdmin">
       <mat-icon>exit_to_app</mat-icon>
     </button>
   </mat-toolbar>
@@ -21,7 +21,7 @@
         <mat-error>Name is required</mat-error>
       </mat-form-field>
       <button mat-icon-button color="primary" [disabled]="!nameInput.valid" (click)="changeGroupName(nameInput.value)">
-        <mat-icon>save</mat-icon>
+        <mat-icon svgIcon="outline-save"></mat-icon>
       </button>
       <button mat-icon-button color="primary"  (click)="editMode = false">
         <mat-icon>redo</mat-icon>
@@ -59,7 +59,7 @@
       <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" *ngFor="let invitation of pendingInvitations" class="profile">
         <div fxLayoutAlign="center center" class="image-preview">
           <button mat-icon-button (click)="removeInvitation(invitation)">
-            <mat-icon color="primary">clear</mat-icon>
+            <mat-icon color="primary">delete_outline</mat-icon>
           </button>
         </div>
         <p>{{ invitation }}</p>

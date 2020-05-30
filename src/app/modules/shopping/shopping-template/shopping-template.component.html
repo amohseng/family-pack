@@ -1,0 +1,100 @@
+<section *ngIf="!isWaiting" fxFlex  fxLayout="column" fxLayoutAlign="start center" class="container mat-elevation-z8">
+  <mat-toolbar>
+    <span fxFlex>Shopping Template</span>
+    <button mat-icon-button color="primary" (click)="saveShoppingTemplate()">
+      <mat-icon svgIcon="outline-save"></mat-icon>
+    </button>
+  </mat-toolbar>
+  <div fxLayout="column" fxLayoutGap="10px" class="content">
+    <!-- Categories -->
+    <ng-container *ngFor="let category of shoppingTemplate?.categories">
+      <div *ngIf="editMode === category.id" fxLayoutAlign="start center">
+        <button mat-icon-button>
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+        <mat-form-field fxFlex>
+          <input type="text" autocomplete="off" matInput placeholder="Category name" [ngModel]="category.name" required (keyup.enter)="updateCategory(category.id, categoryInput)" #categoryInput="ngModel">
+        </mat-form-field>
+        <button type="button" mat-icon-button color="primary" [disabled]="!categoryInput.valid" (click)="updateCategory(category.id, categoryInput)">
+          <mat-icon svgIcon="outline-save"></mat-icon>
+        </button>
+        <button mat-icon-button color="primary"  (click)="editMode = null">
+          <mat-icon>redo</mat-icon>
+        </button>
+      </div>
+      <div *ngIf="editMode !== category.id" fxLayoutAlign="start center">
+        <button mat-icon-button (click)="expandedMode = expandedMode===category.id?null:category.id">
+          <mat-icon>{{ expandedMode === category.id ? 'expand_more' : 'chevron_right'}}</mat-icon>
+        </button>
+        <span fxFlex><strong>{{ category.name }}</strong></span>
+        <button type="button" mat-icon-button color="primary" [disabled]="expandedMode !== null" (click)="editMode = category.id">
+          <mat-icon svgIcon="outline-edit"></mat-icon>
+        </button>
+        <button mat-icon-button color="primary" [disabled]="expandedMode !== null" (click)="deleteCategory(category.id)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </div>
+      <!-- Items -->
+      <ng-container *ngFor="let item of category.items">
+        <div *ngIf="expandedMode === category.id && editMode === item.id" fxLayoutAlign="start center">
+          <button mat-icon-button [disabled]="true"></button>
+          <mat-form-field fxFlex>
+            <input type="text" autocomplete="off" matInput placeholder="Item name" [ngModel]="item.name" required (keyup.enter)="updateItem(category.id, item.id, itemInput)" #itemInput="ngModel">
+          </mat-form-field>
+          <button type="button" mat-icon-button color="primary" [disabled]="!itemInput.valid" (click)="updateItem(category.id, item.id, itemInput)">
+            <mat-icon svgIcon="outline-save"></mat-icon>
+          </button>
+          <button mat-icon-button color="primary"  (click)="editMode = null">
+            <mat-icon>redo</mat-icon>
+          </button>
+        </div>
+        <div *ngIf="expandedMode === category.id && editMode !== item.id" fxLayoutAlign="start center">
+          <button mat-icon-button [disabled]="true"></button>
+          <span fxFlex>{{ item.name }}</span>
+          <button type="button" mat-icon-button color="primary" (click)="editMode = item.id">
+            <mat-icon svgIcon="outline-edit"></mat-icon>
+          </button>
+          <button mat-icon-button color="primary"  (click)="deleteItem(category.id, item.id)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+      <!-- New Item-->
+      <div *ngIf="expandedMode === category.id && editMode === null" fxLayoutAlign="start center">
+        <button mat-icon-button [disabled]="true"></button>
+        <mat-form-field fxFlex>
+          <input type="text" autocomplete="off" matInput placeholder="Add new item" ngModel required (keyup.enter)="addItem(category.id, newItemInput)" #newItemInput="ngModel">
+        </mat-form-field>
+        <button type="button" mat-icon-button color="primary" [disabled]="!newItemInput.valid" (click)="addItem(category.id, newItemInput)">
+          <mat-icon>add_circle_outline</mat-icon>
+        </button>
+        <button mat-icon-button color="primary"  (click)="newItemInput.reset()">
+          <mat-icon>redo</mat-icon>
+        </button>
+      </div>
+      <!-- END: New Item-->
+      <!-- END Items -->
+    </ng-container>
+    <!-- END: Categories -->
+    <!-- New Category-->
+    <div *ngIf="editMode === null && expandedMode === null" fxLayoutAlign="start center">
+      <button mat-icon-button>
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+      <mat-form-field fxFlex>
+        <input type="text" autocomplete="off" matInput placeholder="Add new category" ngModel required (keyup.enter)="addCategory(newCategoryInput)" #newCategoryInput="ngModel">
+      </mat-form-field>
+      <button type="button" mat-icon-button color="primary" [disabled]="!newCategoryInput.valid" (click)="addCategory(newCategoryInput)">
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+      <button mat-icon-button color="primary"  (click)="newCategoryInput.reset()">
+        <mat-icon>redo</mat-icon>
+      </button>
+    </div>
+    <!-- END: New Category-->
+  </div>
+</section>
+<section *ngIf="isWaiting" fxFlex  fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
+</section>
+
