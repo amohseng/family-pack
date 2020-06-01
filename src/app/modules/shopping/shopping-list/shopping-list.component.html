@@ -1,1 +1,70 @@
-<p>shopping-list works!</p>
+<section *ngIf="!(isWaiting || isWriting)" fxFlex  fxLayout="column" fxLayoutAlign="start center" class="container mat-elevation-z8">
+  <mat-toolbar>
+    <span fxFlex>{{viewMode === 'edit'? 'Create Shopping List': 'Enjoy Shopping'}}</span>
+    <button *ngIf="viewMode === 'cart'" mat-icon-button color="primary" (click)="viewMode = 'edit'">
+      <mat-icon svgIcon="outline-edit"></mat-icon>
+    </button>
+    <button  *ngIf="viewMode === 'edit'" mat-icon-button color="primary" [disabled]="shoppingListItems.length === 0" (click)="viewMode = 'cart'">
+      <mat-icon svgIcon="outline-shopping_cart"></mat-icon>
+    </button>
+    <button  *ngIf="viewMode === 'cart'" mat-icon-button color="primary" [disabled]="getPurchasedItemsCount() === 0" (click)="confirm()">
+      <mat-icon>done_outline</mat-icon>
+    </button>
+  </mat-toolbar>
+  <!-- Edit View -->
+  <div *ngIf="viewMode === 'edit'" fxLayout="column" fxLayoutGap="10px" class="content">
+    <span *ngIf="shoppingListItems" class="counter">({{shoppingListItems.length}} items added to shopping list)</span>
+    <!-- Categories -->
+    <ng-container *ngFor="let category of shoppingTemplate?.categories">
+      <div fxLayoutAlign="start center">
+        <button mat-icon-button (click)="expandedMode = expandedMode===category.id?null:category.id">
+          <mat-icon>{{ expandedMode === category.id ? 'expand_more' : 'chevron_right'}}</mat-icon>
+        </button>
+        <span><strong>{{ category.name }}</strong></span>
+        <span class="counter">({{getSelectedItemsCount(category.id)}})</span>
+      </div>
+      <!-- Items -->
+      <ng-container *ngFor="let item of category.items">
+        <div *ngIf="expandedMode === category.id" fxLayoutAlign="start center">
+          <button mat-icon-button [disabled]="true"></button>
+          <span fxFlex>{{ item.name }}</span>
+          <mat-form-field>
+            <input type="text" matInput placeholder="Qty" (blur)="createShoppingListItem(item.id, item.name, category.id, category.name, itemInput)" [disabled]="inShoppingList(item.id)" [ngModel]="getQuantity(item.id)" pattern="^[\u0661-\u0669|1-9][\u0660-\u0669|0-9]{0,2}$" required #itemInput="ngModel">
+          </mat-form-field>
+          <button [disabled]="!inShoppingList(item.id)" mat-icon-button color="primary" (click)="deleteShoppingListItem(item.id, itemInput)">
+            <mat-icon svgIcon="outline-remove_shopping_cart"></mat-icon>
+          </button>
+        </div>
+      </ng-container>
+      <!-- END Items -->
+    </ng-container>
+    <!-- END: Categories -->
+  </div>
+  <!-- END: Edit View -->
+  <!-- Cart View -->
+  <div *ngIf="viewMode === 'cart'" fxLayout="column" fxLayoutGap="10px" class="content">
+    <span *ngIf="shoppingListItems" class="counter">({{getPurchasedItemsCount()}} items purchased out of {{shoppingListItems.length}})</span>
+    <!-- Shopping List Items -->
+    <ng-container *ngFor="let shoppingListItem of shoppingListItems">
+      <div fxLayoutAlign="start center">
+        <button mat-icon-button>
+          <mat-icon *ngIf="shoppingListItem.purchased">local_offer</mat-icon>
+          <mat-icon *ngIf="!shoppingListItem.purchased" svgIcon="outline-local_offer"></mat-icon>
+        </button>
+        <span fxFlex>{{ shoppingListItem.name }}</span>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Qty" [disabled]="true" [ngModel]="shoppingListItem.quantity">
+        </mat-form-field>
+        <button mat-icon-button color="primary" (click)="toggleItemPurchaseStatus(shoppingListItem)">
+          <mat-icon *ngIf="!shoppingListItem.purchased">check_box_outline_blank</mat-icon>
+          <mat-icon *ngIf="shoppingListItem.purchased" svgIcon="outline-check_box"></mat-icon>
+        </button>
+      </div>
+    </ng-container>
+    <!-- END: Shopping List Items -->
+  </div>
+  <!-- END: Cart View -->
+</section>
+<section *ngIf="isWaiting || isWriting" fxFlex  fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
+</section>

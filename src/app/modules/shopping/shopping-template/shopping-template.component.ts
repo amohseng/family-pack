@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgModel } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AuthService } from 'src/app/services/auth.service';
-import { User } from 'src/app/models/user.model';
 import { ShoppingService } from 'src/app/services/shopping.service';
+import { User } from 'src/app/models/user.model';
 import { ShoppingTemplate } from 'src/app/models/shopping-template.model';
-import { FormControl, NgModel, NgForm } from '@angular/forms';
+import { ShoppingListItem } from 'src/app/models/shopping-list-item.model';
 
 @Component({
   selector: 'app-shopping-template',
@@ -20,6 +21,7 @@ export class ShoppingTemplateComponent implements OnInit, OnDestroy {
   isWaiting = false;
   user: User;
   shoppingTemplate: ShoppingTemplate;
+  shoppingListItems: ShoppingListItem[];
 
   editMode = null;
   expandedMode = null;
@@ -40,12 +42,25 @@ export class ShoppingTemplateComponent implements OnInit, OnDestroy {
 
   getShoppingTemplate() {
     this.isWaiting = true;
-    this.shoppingService.getShoppingTemplate(this.user.groupId).subscribe(shoppingTemplate => {
+    this.shoppingService.getShoppingTemplate(this.user.groupId).pipe(takeUntil(this.unsubscribe)).subscribe(shoppingTemplate => {
       if (shoppingTemplate) {
         this.shoppingTemplate = shoppingTemplate;
+        this.getShoppingListItems();
       } else {
         this.setNewShoppingTemplate();
       }
+    },
+    error => {
+      console.log(error);
+      this.snackBar.open(error.message, 'Ok', {
+        duration: 10000
+      });
+    });
+  }
+
+  getShoppingListItems() {
+    this.shoppingService.getShoppingListItems(this.user.groupId).pipe(takeUntil(this.unsubscribe)).subscribe(shoppingListItems => {
+      this.shoppingListItems = shoppingListItems;
       this.isWaiting = false;
     },
     error => {
@@ -63,56 +78,61 @@ export class ShoppingTemplateComponent implements OnInit, OnDestroy {
     };
   }
 
+  itemInShoppingList(id: string): boolean {
+    return !!this.shoppingListItems.find(item => item.id === id);
+  }
+
+  categoryInShoppingList(categoryId: string): boolean {
+    return !!this.shoppingListItems.find(item => item.categoryId === categoryId);
+  }
+
   async saveShoppingTemplate() {
     try {
-      this.isWaiting = true;
       await this.shoppingService.saveShoppingTemplate(this.shoppingTemplate);
-      this.snackBar.open('Shopping template saved successfully', 'Ok', {
-        duration: 10000
-      });
     } catch (error) {
       console.log(error);
       this.snackBar.open(error.message, 'Ok', {
         duration: 10000
       });
-    } finally {
-      this.isWaiting = false;
     }
   }
 
-  addCategory(newCategoryInput: NgModel) {
+  async addCategory(newCategoryInput: NgModel) {
     if (newCategoryInput.valid) {
       this.shoppingTemplate.categories.push({
         id: this.shoppingService.getDBId(),
         name: newCategoryInput.value,
         items: []
       });
+      await this.saveShoppingTemplate();
     }
     newCategoryInput.reset();
   }
 
-  updateCategory(categoryId: string, categoryInput: NgModel) {
+  async updateCategory(categoryId: string, categoryInput: NgModel) {
     if (categoryInput.valid) {
       const index = this.shoppingTemplate.categories.findIndex((category) => {
         return category.id === categoryId;
       });
       if (index >= 0) {
         this.shoppingTemplate.categories[index].name = categoryInput.value;
+        await this.saveShoppingTemplate();
       }
     }
     this.editMode = null;
   }
 
-  deleteCategory(categoryId: string) {
+  async deleteCategory(categoryId: string) {
     const index = this.shoppingTemplate.categories.findIndex((category) => {
       return category.id === categoryId;
     });
     if (index >= 0) {
       this.shoppingTemplate.categories.splice(index, 1);
+      await this.saveShoppingTemplate();
     }
   }
 
-  addItem(categoryId: string, newItemInput: NgModel) {
+  async addItem(categoryId: string, newItemInput: NgModel) {
     if (newItemInput.valid) {
       const index = this.shoppingTemplate.categories.findIndex((category) => {
         return category.id === categoryId;
@@ -122,12 +142,13 @@ export class ShoppingTemplateComponent implements OnInit, OnDestroy {
           id: this.shoppingService.getDBId(),
           name: newItemInput.value
         });
+        await this.saveShoppingTemplate();
       }
     }
     newItemInput.reset();
   }
 
-  updateItem(categoryId: string, itemId: string, itemInput: NgModel) {
+  async updateItem(categoryId: string, itemId: string, itemInput: NgModel) {
     if (itemInput.valid) {
       const categoryIndex = this.shoppingTemplate.categories.findIndex((category) => {
         return category.id === categoryId;
@@ -138,13 +159,14 @@ export class ShoppingTemplateComponent implements OnInit, OnDestroy {
         });
         if (itemIndex > -1) {
           this.shoppingTemplate.categories[categoryIndex].items[itemIndex].name = itemInput.value;
+          await this.saveShoppingTemplate();
         }
       }
     }
     this.editMode = null;
   }
 
-  deleteItem(categoryId: string, itemId: string) {
+  async deleteItem(categoryId: string, itemId: string) {
     const categoryIndex = this.shoppingTemplate.categories.findIndex((category) => {
       return category.id === categoryId;
     });
@@ -154,6 +176,7 @@ export class ShoppingTemplateComponent implements OnInit, OnDestroy {
       });
       if (itemIndex > -1) {
         this.shoppingTemplate.categories[categoryIndex].items.splice(itemIndex, 1);
+        await this.saveShoppingTemplate();
       }
     }
   }

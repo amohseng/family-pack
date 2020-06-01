@@ -1,9 +1,6 @@
 <section *ngIf="!isWaiting" fxFlex  fxLayout="column" fxLayoutAlign="start center" class="container mat-elevation-z8">
   <mat-toolbar>
     <span fxFlex>Shopping Template</span>
-    <button mat-icon-button color="primary" (click)="saveShoppingTemplate()">
-      <mat-icon svgIcon="outline-save"></mat-icon>
-    </button>
   </mat-toolbar>
   <div fxLayout="column" fxLayoutGap="10px" class="content">
     <!-- Categories -->
@@ -30,7 +27,7 @@
         <button type="button" mat-icon-button color="primary" [disabled]="expandedMode !== null" (click)="editMode = category.id">
           <mat-icon svgIcon="outline-edit"></mat-icon>
         </button>
-        <button mat-icon-button color="primary" [disabled]="expandedMode !== null" (click)="deleteCategory(category.id)">
+        <button mat-icon-button color="primary" [disabled]="expandedMode !== null || categoryInShoppingList(category.id)" (click)="deleteCategory(category.id)">
           <mat-icon>delete_outline</mat-icon>
         </button>
       </div>
@@ -54,7 +51,7 @@
           <button type="button" mat-icon-button color="primary" (click)="editMode = item.id">
             <mat-icon svgIcon="outline-edit"></mat-icon>
           </button>
-          <button mat-icon-button color="primary"  (click)="deleteItem(category.id, item.id)">
+          <button mat-icon-button color="primary"  [disabled]="itemInShoppingList(item.id)" (click)="deleteItem(category.id, item.id)">
             <mat-icon>delete_outline</mat-icon>
           </button>
         </div>
@@ -63,7 +60,7 @@
       <div *ngIf="expandedMode === category.id && editMode === null" fxLayoutAlign="start center">
         <button mat-icon-button [disabled]="true"></button>
         <mat-form-field fxFlex>
-          <input type="text" autocomplete="off" matInput placeholder="Add new item" ngModel required (keyup.enter)="addItem(category.id, newItemInput)" #newItemInput="ngModel">
+          <input type="text" autocomplete="off" matInput placeholder="Add new item" ngModel required #newItemInput="ngModel">
         </mat-form-field>
         <button type="button" mat-icon-button color="primary" [disabled]="!newItemInput.valid" (click)="addItem(category.id, newItemInput)">
           <mat-icon>add_circle_outline</mat-icon>
@@ -82,7 +79,7 @@
         <mat-icon>chevron_right</mat-icon>
       </button>
       <mat-form-field fxFlex>
-        <input type="text" autocomplete="off" matInput placeholder="Add new category" ngModel required (keyup.enter)="addCategory(newCategoryInput)" #newCategoryInput="ngModel">
+        <input type="text" autocomplete="off" matInput placeholder="Add new category" ngModel required #newCategoryInput="ngModel">
       </mat-form-field>
       <button type="button" mat-icon-button color="primary" [disabled]="!newCategoryInput.valid" (click)="addCategory(newCategoryInput)">
         <mat-icon>add_circle_outline</mat-icon>

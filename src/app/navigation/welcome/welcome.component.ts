@@ -16,5 +16,4 @@ export class WelcomeComponent implements OnInit {
   goShopping() {
     this.router.navigate(['/shopping/list']);
   }
-
 }

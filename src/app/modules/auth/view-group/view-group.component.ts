@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user.model';
 import { Group } from 'src/app/models/group.model';
 
-
 @Component({
   selector: 'app-view-group',
   templateUrl: './view-group.component.html',

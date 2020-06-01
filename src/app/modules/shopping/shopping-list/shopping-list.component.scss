@@ -16,8 +16,16 @@ mat-toolbar {
   border-top-right-radius: 4px;
 }
 
+mat-form-field {
+  margin-right: 15px;
+  width:50px;
+}
+
 .content {
   width: 100%;
   padding: 25px 0px;
 }
 
+.counter {
+  margin-left: 10px;
+}

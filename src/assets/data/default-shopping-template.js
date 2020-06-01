@@ -3,7 +3,7 @@ export const defaultShoppingTemplate = {
   "categories": [
     {
       "id": null,
-      "name": "Bakary",
+      "name": "Bakery",
       "items": [
         {
           "id": null,

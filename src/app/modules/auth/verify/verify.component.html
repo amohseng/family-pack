@@ -1,5 +1,5 @@
-<section fxFlex fxLayoutAlign="center center">
-  <mat-card *ngIf="!isWaiting">
+<section *ngIf="!isWaiting" fxFlex fxLayoutAlign="center center">
+  <mat-card>
     <mat-card-header>
       <img  class="avatar" *ngIf="user" mat-card-avatar [src]="user.photoURL">
       <mat-card-title>Email Verification</mat-card-title>
@@ -15,5 +15,7 @@
       <button fxFlexAlign="end" mat-flat-button color="primary" (click)="sendEmailVerification()">Resend</button>
     </mat-card-content>
   </mat-card>
-  <mat-spinner *ngIf="isWaiting"></mat-spinner>
+</section>
+<section *ngIf="isWaiting" fxFlex fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
 </section>

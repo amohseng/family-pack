@@ -1,6 +1,5 @@
-
-<section fxFlex fxLayoutAlign="center center">
-  <mat-card *ngIf="!isWaiting">
+<section *ngIf="!isWaiting" fxFlex fxLayoutAlign="center center">
+  <mat-card>
     <mat-card-header>
       <img class="avatar" mat-card-avatar>
       <mat-card-title>Signup</mat-card-title>
@@ -23,6 +22,7 @@
       </form>
     </mat-card-content>
   </mat-card>
-  <mat-spinner *ngIf="isWaiting"></mat-spinner>
 </section>
-
+<section *ngIf="isWaiting" fxFlex fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
+</section>
