@@ -55,5 +55,30 @@ export class IconService {
         'assets/img/icons/outline-remove_shopping_cart-24px.svg'
       )
     );
+    iconRegistry.addSvgIcon(
+      'outline-palette',
+      sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/img/icons/outline-palette-24px.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'outline-vpn_key',
+      sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/img/icons/outline-vpn_key-24px.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'outline-person_add',
+      sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/img/icons/outline-person_add-24px.svg'
+      )
+    );
+    iconRegistry.addSvgIcon(
+      'outline-eject',
+      sanitizer.bypassSecurityTrustResourceUrl(
+        'assets/img/icons/outline-eject-24px.svg'
+      )
+    );
+
   }
 }

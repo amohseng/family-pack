@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { firestore } from 'firebase';
 
-import { ShoppingTemplate } from '../models/shopping-template.model';
 import { defaultShoppingTemplate } from '../../assets/data/default-shopping-template';
+import { ShoppingTemplate } from '../models/shopping-template.model';
 import { ShoppingListItem } from '../models/shopping-list-item.model';
 import { ArchivedShoppingList } from '../models/archived-shopping-list.model';
 
@@ -57,6 +58,20 @@ export class ShoppingService {
       console.log(error);
       throw new Error('Failed to update shopping template data.');
     }
+  }
+
+  getArchivedShoppingLists(groupId: string) {
+    return this.db.collection('archivedShoppingLists', ref => ref.where('groupId', '==', groupId))
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(action => {
+            const data = action.payload.doc.data() as ArchivedShoppingList;
+            const id = action.payload.doc.id;
+            const shoppingDate = (data.shoppingDate as unknown as firestore.Timestamp).toDate();
+            return { ...data, id, shoppingDate };
+          }).sort(this.orderByShoppingDate)
+        )
+      );
   }
 
   async saveArchivedShoppingList(archivedShoppingList: ArchivedShoppingList): Promise<string> {
@@ -134,6 +149,19 @@ export class ShoppingService {
     }
     if (nameA > nameB) {
       return 1;
+    }
+    return 0;
+  }
+
+  orderByShoppingDate(a, b) {
+    const shoppingDateA = a.shoppingDate.getTime();
+    const shoppingDateB = b.shoppingDate.getTime();
+    // desc
+    if (shoppingDateA < shoppingDateB) {
+      return 1;
+    }
+    if (shoppingDateA > shoppingDateB) {
+      return -1;
     }
     return 0;
   }

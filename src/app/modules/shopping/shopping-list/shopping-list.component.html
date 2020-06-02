@@ -47,7 +47,7 @@
     <!-- Shopping List Items -->
     <ng-container *ngFor="let shoppingListItem of shoppingListItems">
       <div fxLayoutAlign="start center">
-        <button mat-icon-button>
+        <button mat-icon-button color="primary">
           <mat-icon *ngIf="shoppingListItem.purchased">local_offer</mat-icon>
           <mat-icon *ngIf="!shoppingListItem.purchased" svgIcon="outline-local_offer"></mat-icon>
         </button>

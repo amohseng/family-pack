@@ -16,15 +16,15 @@
     </button>
     <mat-menu #appsMenu="matMenu">
       <a *ngIf="authenticated" routerLink="/shopping/list" mat-menu-item>
-        <mat-icon>shopping_cart</mat-icon>
+        <mat-icon color="primary" svgIcon="outline-shopping_cart"></mat-icon>
         <span>Shopping List</span>
       </a>
       <a *ngIf="authenticated" routerLink="/shopping/template" mat-menu-item>
-        <mat-icon>list_alt</mat-icon>
+        <mat-icon color="primary">list_alt</mat-icon>
         <span>Shopping Template</span>
       </a>
       <a *ngIf="authenticated" routerLink="/shopping/history" mat-menu-item>
-        <mat-icon>history</mat-icon>
+        <mat-icon color="primary">history</mat-icon>
         <span>Shopping History</span>
       </a>
     </mat-menu>
@@ -34,31 +34,31 @@
     <mat-menu #settingsMenu="matMenu">
 
       <a *ngIf="authenticated" routerLink="/auth/viewgroup" mat-menu-item>
-        <mat-icon>people</mat-icon>
+        <mat-icon color="primary">people_outline</mat-icon>
         <span>My Family</span>
       </a>
       <a *ngIf="authenticated" routerLink="/auth/updateprofile" mat-menu-item>
-        <mat-icon>person</mat-icon>
+        <mat-icon color="primary">person_outline</mat-icon>
         <span>My Profile</span>
       </a>
       <a *ngIf="authenticated" routerLink="/auth/changepassword" mat-menu-item>
-        <mat-icon>vpn_key</mat-icon>
+        <mat-icon color="primary" svgIcon="outline-vpn_key"></mat-icon>
         <span>Change Password</span>
       </a>
       <a (click)="changeTheme()" style="cursor: pointer;" mat-menu-item>
-        <mat-icon>palette</mat-icon>
+        <mat-icon color="primary" svgIcon="outline-palette"></mat-icon>
         <span>Change Theme</span>
       </a>
       <a *ngIf="!authenticated" routerLink="/auth/signup" mat-menu-item>
-        <mat-icon>person_add</mat-icon>
+        <mat-icon color="primary" svgIcon="outline-person_add"></mat-icon>
         <span>Signup</span>
       </a>
       <a *ngIf="!authenticated" routerLink="/auth/login" mat-menu-item>
-        <mat-icon>exit_to_app</mat-icon>
+        <mat-icon color="primary">exit_to_app</mat-icon>
         <span>Login</span>
       </a>
       <a *ngIf="authenticated" (click)="logout()" routerLink="/" mat-menu-item>
-        <mat-icon>eject</mat-icon>
+        <mat-icon color="primary" svgIcon="outline-eject"></mat-icon>
         <span>Logout</span>
       </a>
     </mat-menu>

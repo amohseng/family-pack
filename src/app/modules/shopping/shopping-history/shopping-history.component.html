@@ -1,1 +1,28 @@
-<p>shopping-history works!</p>
+<section *ngIf="!isWaiting" fxFlex  fxLayout="column" fxLayoutAlign="start center" class="container mat-elevation-z8">
+  <mat-toolbar>
+    <span fxFlex>Shopping History</span>
+  </mat-toolbar>
+  <div fxLayout="column" fxLayoutGap="10px" class="content">
+    <ng-container *ngFor="let list of archivedShoppingLists">
+      <div fxLayoutAlign="start center">
+        <button mat-icon-button (click)="expandedMode = expandedMode===list.id?null:list.id">
+          <mat-icon>{{ expandedMode === list.id ? 'expand_more' : 'chevron_right'}}</mat-icon>
+        </button>
+        <span fxFlex><strong>{{ list.shoppingDate | date: 'medium'}}</strong></span>
+      </div>
+      <ng-container *ngFor="let shoppingListItem of list.items">
+        <div *ngIf="expandedMode === list.id" fxLayoutAlign="start center">
+          <button mat-icon-button [disabled]="true"></button>
+          <button mat-icon-button color="primary">
+            <mat-icon>local_offer</mat-icon>
+          </button>
+          <span class="list-item-name">{{ shoppingListItem.name }}</span>
+          <span>({{ shoppingListItem.quantity }})</span>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</section>
+<section *ngIf="isWaiting" fxFlex  fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
+</section>
