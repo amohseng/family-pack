@@ -149,5 +149,8 @@
       }
     }
   },
-  "defaultProject": "family-pack"
+  "defaultProject": "family-pack",
+  "cli": {
+    "analytics": false
+  }
 }
