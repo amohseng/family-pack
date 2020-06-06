@@ -33,8 +33,8 @@ $warn: mat-color($app-warn);
 }
 
 // Define an alternate dark theme.
-$dark-primary: mat-palette($mat-pink, 500, 300, 700);
-$dark-accent:  mat-palette($mat-blue-grey);
+$dark-primary: mat-palette($mat-blue, 500, 300, 700);
+$dark-accent:  mat-palette($mat-amber);
 $dark-warn:    mat-palette($mat-red);
 $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 

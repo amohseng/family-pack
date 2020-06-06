@@ -1,9 +1,9 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav role="navigation">
-   <app-sidenav-list [sidenav]="sidenav"></app-sidenav-list>
+   <app-sidenav-list (themeChanged) = "changeTheme()" [sidenav]="sidenav"></app-sidenav-list>
   </mat-sidenav>
   <mat-sidenav-content fxLayout="column">
-    <app-header [sidenav]="sidenav"></app-header>
+    <app-header [toolbarColor]="toolbarColor" (themeChanged) = "changeTheme()" [sidenav]="sidenav"></app-header>
     <main [@routeAnimations]="prepareRoute(outlet)" fxFlex fxLayout="column">
       <router-outlet #outlet="outlet"></router-outlet>
     </main>

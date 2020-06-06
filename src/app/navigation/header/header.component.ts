@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -13,14 +13,15 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   @Input() sidenav;
+  @Input() toolbarColor;
+  @Output() themeChanged: EventEmitter<void> = new EventEmitter<void>();
   unsubscribe = new Subject<void>();
   authenticated = false;
   user: User;
-  toolbarColor;
+
   constructor(private snackBar: MatSnackBar, private authService: AuthService) { }
 
   ngOnInit(): void {
-    const theme = localStorage.getItem('theme');
     this.authService.authChange.pipe(takeUntil(this.unsubscribe)).subscribe(authenticated => {
       this.authenticated = authenticated;
     });
@@ -30,10 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   changeTheme() {
-    const theme = localStorage.getItem('theme');
-    theme === 'app-light-theme' ? localStorage.setItem('theme', 'app-dark-theme') : localStorage.setItem('theme', 'app-light-theme');
-    document.getElementsByTagName('html')[0].classList.remove(theme);
-    document.getElementsByTagName('html')[0].classList.add(localStorage.getItem('theme'));
+    this.themeChanged.emit();
   }
 
   async logout() {
